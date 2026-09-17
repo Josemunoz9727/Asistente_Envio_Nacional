@@ -654,3 +654,12 @@ fieldset legend {
 .urgency-fieldset.is-error legend {
   color: var(--color-error);
 }
+/* Cambio de color de prueba para el proyecto */
+body {
+    background-color: #f0f4f8; /* Cambia el color de fondo a un azul claro */
+    color: #1a202c;           /* Cambia el texto a un tono oscuro */
+}
+
+h1, h2, h3 {
+    color: #2b6cb0;           /* Cambia los títulos a color azul */
+}
