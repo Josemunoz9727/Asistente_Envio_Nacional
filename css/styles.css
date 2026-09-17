@@ -1,0 +1,656 @@
+/* =========================================================
+   ASISTENTE DE ENVÍO NACIONAL — styles.css
+   Organización: 1) Variables  2) Base/Reset  3) Layout
+                 4) Componentes  5) Estados y utilidades
+   ========================================================= */
+
+
+/* =========================================================
+   1. VARIABLES / TOKENS
+   ========================================================= */
+:root {
+  /* Color */
+  --color-bg: #EEF2F6;
+  --color-surface: #FFFFFF;
+  --color-primary: #14213D;
+  --color-primary-dark: #0C1526;
+  --color-accent: #F2A93B;
+  --color-accent-dark: #D98A16;
+  --color-text: #1A1F26;
+  --color-text-muted: #5B6472;
+  --color-border: #D7DEE7;
+  --color-success: #2E7D46;
+  --color-error: #C23B3B;
+
+  /* Tipografía */
+  --font-heading: "Barlow Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Espaciado */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4.5rem;
+
+  /* Bordes y sombras */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --shadow-sm: 0 1px 3px rgba(20, 33, 61, 0.08);
+  --shadow-md: 0 12px 24px rgba(20, 33, 61, 0.12);
+
+  /* Layout */
+  --max-width-content: 1120px;
+  --transition-base: 180ms ease;
+}
+
+
+/* =========================================================
+   2. BASE / RESET
+   ========================================================= */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, p, ul, ol, figure {
+  margin: 0;
+}
+
+ul, ol {
+  padding: 0;
+  list-style: none;
+}
+
+img, svg {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+input, select, textarea {
+  font: inherit;
+  color: inherit;
+}
+
+h1, h2, h3 {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  line-height: 1.15;
+  color: var(--color-primary);
+}
+
+:focus-visible {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: -999px;
+  top: auto;
+  background: var(--color-primary);
+  color: #fff;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-sm);
+  z-index: 1000;
+}
+
+.skip-link:focus {
+  left: var(--space-4);
+  top: var(--space-4);
+}
+
+
+/* =========================================================
+   3. LAYOUT
+   ========================================================= */
+.container {
+  width: 100%;
+  max-width: var(--max-width-content);
+  margin-inline: auto;
+  padding-inline: var(--space-5);
+}
+
+section {
+  padding-block: clamp(2.5rem, 5vw, 5rem);
+}
+
+/* Header / navbar propio, montado sobre el componente de Bootstrap */
+.site-header {
+  background-color: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.navbar.site-navbar {
+  padding-block: var(--space-3);
+}
+
+.navbar.site-navbar .navbar-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.15rem;
+  color: var(--color-primary);
+}
+
+.brand-mark {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  flex-shrink: 0;
+}
+
+.navbar.site-navbar .nav-link {
+  color: var(--color-text);
+  font-weight: 500;
+  padding-inline: var(--space-3);
+}
+
+.navbar.site-navbar .nav-link:hover {
+  color: var(--color-accent-dark);
+}
+
+/* Hero */
+.hero-grid {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-7);
+}
+
+.hero-copy {
+  flex: 1 1 380px;
+}
+
+.hero-eyebrow {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: var(--space-3);
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 1.3rem + 2.5vw, 3.2rem);
+  margin-bottom: var(--space-4);
+}
+
+.hero-text {
+  color: var(--color-text-muted);
+  max-width: 60ch;
+  margin-bottom: var(--space-5);
+}
+
+.hero-route {
+  flex: 1 1 280px;
+  max-width: 340px;
+}
+
+/* Servicios: grid nativo, distinto de la grilla de Bootstrap usada en el formulario */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--space-5);
+  margin-top: var(--space-6);
+}
+
+.section-lead {
+  color: var(--color-text-muted);
+  max-width: 65ch;
+  margin-top: var(--space-2);
+}
+
+/* Formulario */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: var(--space-4) var(--space-5);
+  margin-top: var(--space-5);
+}
+
+.dimensions-fieldset,
+.urgency-fieldset {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  margin-top: var(--space-5);
+}
+
+.dimensions-row {
+  margin-top: var(--space-3);
+  --bs-gutter-x: 1.5rem;
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-6);
+}
+
+.footer-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  padding-block: var(--space-6);
+}
+
+.footer-grid > div {
+  flex: 1 1 260px;
+}
+
+/* Responsive: ajuste propio para pantallas móviles */
+@media (max-width: 576px) {
+  .hero-route {
+    max-width: 220px;
+    margin-inline: auto;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .form-actions .btn-primary,
+  .form-actions .btn-secondary {
+    width: 100%;
+    text-align: center;
+  }
+
+  .services-section h2,
+  .quote-section h2 {
+    text-align: center;
+  }
+}
+
+
+/* =========================================================
+   4. COMPONENTES
+   ========================================================= */
+
+/* Botones propios (no se reutilizan las clases visuales .btn de Bootstrap) */
+.btn-primary,
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-dark);
+  box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-primary);
+  border: 1px solid var(--color-border);
+}
+
+.btn-secondary:hover {
+  border-color: var(--color-primary);
+}
+
+.btn-link {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  margin-top: var(--space-5);
+  display: inline-block;
+}
+
+/* Ruta / hero SVG */
+.route-line {
+  stroke: var(--color-border);
+  stroke-width: 3;
+  stroke-dasharray: 6 8;
+}
+
+.route-point {
+  fill: var(--color-primary);
+}
+
+.route-point--end {
+  fill: var(--color-accent);
+}
+
+.route-parcel {
+  fill: var(--color-accent);
+  animation: travel 3.2s ease-in-out infinite;
+}
+
+@keyframes travel {
+  0%   { transform: translateX(0); }
+  50%  { transform: translateX(270px); }
+  100% { transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .route-parcel {
+    animation: none;
+  }
+}
+
+/* Tarjetas de servicio */
+.service-card {
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-top: 4px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--transition-base), box-shadow var(--transition-base);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.service-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Selector de atributo: distingue el servicio prioritario por su dato en HTML */
+.service-card[data-service="prioritario"] {
+  border-top-color: var(--color-accent);
+}
+
+.service-eyebrow {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  text-transform: none;
+}
+
+.service-features {
+  margin-block: var(--space-2);
+}
+
+.service-features li {
+  position: relative;
+  padding-left: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: 0.92rem;
+  margin-bottom: var(--space-1);
+}
+
+.service-features li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-accent);
+}
+
+.delivery-time {
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-top: auto;
+}
+
+.btn-select {
+  align-self: flex-start;
+  margin-top: var(--space-3);
+  padding: var(--space-2) var(--space-4);
+  border: 1px solid var(--color-primary);
+  border-radius: var(--radius-sm);
+  color: var(--color-primary);
+  font-weight: 600;
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+.btn-select:hover {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+/* Campos del formulario */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.form-group label {
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+/* Selector de atributo: marca visual para todo campo obligatorio */
+.form-group input[required] ~ label,
+.form-group label[for] {
+  position: relative;
+}
+
+.form-group input,
+.form-group select {
+  padding: var(--space-3);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-surface);
+  width: 100%;
+}
+
+.form-group input:hover,
+.form-group select:hover {
+  border-color: var(--color-primary);
+}
+
+fieldset legend {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--color-primary);
+  padding-inline: var(--space-1);
+}
+
+.field-hint {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  margin-top: var(--space-2);
+}
+
+/* Chips de urgencia: combinador adyacente para el estado marcado */
+.urgency-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-3);
+}
+
+.urgency-option {
+  position: relative;
+}
+
+.urgency-option input[type="radio"] {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+
+.urgency-label {
+  display: inline-block;
+  padding: var(--space-2) var(--space-5);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color var(--transition-base), color var(--transition-base);
+}
+
+.urgency-option input[type="radio"]:checked + .urgency-label {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+  color: #fff;
+}
+
+.urgency-option input[type="radio"]:focus-visible + .urgency-label {
+  outline: 3px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+.extra-data {
+  margin-top: var(--space-4);
+  padding-top: var(--space-4);
+  border-top: 1px dashed var(--color-border);
+}
+
+/* Panel de resultado dinámico */
+.result-panel {
+  margin-top: var(--space-6);
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.result-panel h3 {
+  margin-bottom: var(--space-3);
+}
+
+.result-panel dl {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: var(--space-2) var(--space-4);
+  margin: 0;
+}
+
+.result-panel dt {
+  color: var(--color-text-muted);
+  font-weight: 600;
+}
+
+.result-panel dd {
+  margin: 0;
+}
+
+.result-badge {
+  display: inline-block;
+  margin-top: var(--space-4);
+  padding: var(--space-2) var(--space-4);
+  border-radius: 999px;
+  background-color: var(--color-accent);
+  color: var(--color-primary-dark);
+  font-weight: 700;
+}
+
+/* Footer */
+.site-footer {
+  background-color: var(--color-primary);
+  color: #E7ECF3;
+}
+
+.footer-title {
+  color: #fff;
+  font-size: 1.4rem;
+  margin-bottom: var(--space-3);
+}
+
+.footer-list li {
+  margin-bottom: var(--space-1);
+}
+
+.footer-copy {
+  text-align: center;
+  padding-block: var(--space-4);
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  color: #A9B4C4;
+  font-size: 0.85rem;
+}
+
+
+/* =========================================================
+   5. ESTADOS Y UTILIDADES
+   ========================================================= */
+.is-hidden {
+  display: none;
+}
+
+/* Estado de tarjeta seleccionada (clase controlada por JavaScript) */
+.service-card.is-selected {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(20, 33, 61, 0.15);
+}
+
+.service-card.is-selected .btn-select {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+/* Estado de error controlado por clase, además de la validación nativa */
+.form-group.is-error input,
+.form-group.is-error select {
+  border-color: var(--color-error);
+  background-color: #FBEEEE;
+}
+
+.form-group.is-error .field-error {
+  display: block;
+  color: var(--color-error);
+  font-size: 0.85rem;
+  margin-top: var(--space-1);
+}
+
+.field-error {
+  display: none;
+}
+
+.form-group.is-valid input,
+.form-group.is-valid select {
+  border-color: var(--color-success);
+}
+
+.urgency-fieldset.is-error {
+  border-color: var(--color-error);
+}
+
+.urgency-fieldset.is-error legend {
+  color: var(--color-error);
+}
