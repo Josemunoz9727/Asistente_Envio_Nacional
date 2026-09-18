@@ -663,3 +663,7 @@ body {
 h1, h2, h3 {
     color: #2b6cb0;           /* Cambia los títulos a color azul */
 }
+h1 {
+    font-size: 2.5rem;
+    text-align: center;
+}
